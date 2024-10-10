@@ -6,7 +6,7 @@ const QRCode = require('qrcode');
 const nodemailer = require('nodemailer');
 require('dotenv').config(); // Ensure this is present to load environment variables
 const app = express();
-const port = process.env.PORT || 3000; // Use the port from the environment variables if available
+const port = 3000; // Use the port from the environment variables if available
 const path = require('path');
 
 app.use(cors());
