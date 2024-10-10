@@ -6,7 +6,7 @@ const QRCode = require('qrcode');
 const nodemailer = require('nodemailer');
 require('dotenv').config(); // Ensure this is present to load environment variables
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use the port from the environment variables if available
 const path = require('path');
 
 app.use(cors());
@@ -85,7 +85,7 @@ app.post('/generate-qr', async (req, res) => {
     }
 
     // Create a URL for payment confirmation
-    const paymentConfirmationUrl = `http://localhost:3000/payment-confirmation?name=${encodeURIComponent(name)}&totalAmount=${totalAmount}`;
+    const paymentConfirmationUrl = `https://new-backend-production-3b02.up.railway.app/payment-confirmation?name=${encodeURIComponent(name)}&totalAmount=${totalAmount}`;
 
     try {
         // Generate QR code with the payment confirmation URL
@@ -103,9 +103,6 @@ app.post('/generate-qr', async (req, res) => {
 app.post('/send-bill', async (req, res) => {
     const { email, name, products, totalAmount } = req.body;
 
-    console.log("SMTP_USER:", process.env.SMTP_USER);
-    console.log("SMTP_PASS:", process.env.SMTP_PASS);
-
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp.hostinger.com',
         port: process.env.SMTP_PORT || 465,
@@ -118,7 +115,7 @@ app.post('/send-bill', async (req, res) => {
 
     // Generate the email content
     let productDetails = Array.isArray(products) ? products.map(product => `${product.name} - ₹${product.price}`).join('\n') : 'No products available';
-    const paymentLink = `http://localhost:3000/confirm-payment?email=${encodeURIComponent(email)}`;
+    const paymentLink = `https://new-backend-production-3b02.up.railway.app/confirm-payment?email=${encodeURIComponent(email)}`;
     const mailOptions = {
         from: process.env.SMTP_USER || 'yatin.arora@syncwavecom.com', // Hostinger email
         to: email,
