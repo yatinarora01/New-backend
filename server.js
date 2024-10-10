@@ -6,10 +6,15 @@ const QRCode = require('qrcode');
 const nodemailer = require('nodemailer');
 require('dotenv').config(); // Ensure this is present to load environment variables
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use the port from environment variables
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Root route
+app.get('/', (req, res) => {
+    res.send('Welcome to the Autofill Shopping Cart API!'); // Add a simple welcome message
+});
 
 let products = [];
 
