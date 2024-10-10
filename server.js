@@ -12,6 +12,11 @@ const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Autofill Shopping Cart API!');
+});
+
+
 let products = [];
 
 // Event emitter for sending updates
