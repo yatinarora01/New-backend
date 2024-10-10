@@ -12,11 +12,6 @@ const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    res.send('Welcome to the Autofill Shopping Cart API!');
-});
-
-
 let products = [];
 
 // Event emitter for sending updates
@@ -90,7 +85,7 @@ app.post('/generate-qr', async (req, res) => {
     }
 
     // Create a URL for payment confirmation
-    const paymentConfirmationUrl = `http://localhost:3000/payment-confirmation?name=${encodeURIComponent(name)}&totalAmount=${totalAmount}`;
+    const paymentConfirmationUrl = `https://new-backend-production-3b02.up.railway.app/payment-confirmation?name=${encodeURIComponent(name)}&totalAmount=${totalAmount}`;
 
     try {
         // Generate QR code with the payment confirmation URL
@@ -123,7 +118,7 @@ app.post('/send-bill', async (req, res) => {
 
     // Generate the email content
     let productDetails = Array.isArray(products) ? products.map(product => `${product.name} - ₹${product.price}`).join('\n') : 'No products available';
-    const paymentLink = `http://localhost:3000/confirm-payment?email=${encodeURIComponent(email)}`;
+    const paymentLink = `https://new-backend-production-3b02.up.railway.app/confirm-payment?email=${encodeURIComponent(email)}`;
     const mailOptions = {
         from: process.env.SMTP_USER || 'yatin.arora@syncwavecom.com', // Hostinger email
         to: email,
