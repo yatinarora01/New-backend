@@ -184,10 +184,7 @@ app.get('/payment-confirmation', (req, res) => {
     res.send(html);
 });
 
-// Serve payment-success.html from the root directory
-app.get('/payment-success.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'payment-success.html'));
-});
+
 
 app.listen(port, () => {
     console.log(`Backend server is running on port ${port}`);
