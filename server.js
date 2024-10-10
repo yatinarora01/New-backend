@@ -81,7 +81,6 @@ app.get('/events', (req, res) => {
     });
 });
 
-// POST endpoint to generate QR code
 app.post('/generate-qr', async (req, res) => {
     const { name, phone, totalAmount } = req.body;
 
@@ -89,21 +88,18 @@ app.post('/generate-qr', async (req, res) => {
         return res.status(400).json({ message: 'Name, phone, and total amount are required.' });
     }
 
-    // Create a URL for payment confirmation
     const paymentConfirmationUrl = `https://new-backend-production-3b02.up.railway.app/payment-confirmation?name=${encodeURIComponent(name)}&totalAmount=${totalAmount}`;
+    
+    console.log("Payment Confirmation URL:", paymentConfirmationUrl); // Log for debugging
 
     try {
-        // Generate QR code with the payment confirmation URL
         const qrCodeUrl = await QRCode.toDataURL(paymentConfirmationUrl); 
-
-        // Send QR code URL back to the client
         res.status(200).json({ qrCodeUrl });
     } catch (error) {
         console.error('Error generating QR code:', error);
         res.status(500).json({ message: 'Failed to generate QR code.' });
     }
 });
-
 // POST endpoint to send the bill
 app.post('/send-bill', async (req, res) => {
     const { email, name, products, totalAmount } = req.body;
