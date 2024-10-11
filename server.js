@@ -22,6 +22,11 @@ let products = [];
 // Event emitter for sending updates
 const productUpdateEmitter = new EventEmitter();
 
+// Function to generate a random weight between a range
+function generateRandomWeight(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 app.post('/add-item', (req, res) => {
     const { name, price, weight } = req.body;
     const existingProduct = products.find(product => product.name === name);
@@ -54,7 +59,11 @@ app.post('/delete-item', (req, res) => {
 
 
 app.get('/items', (req, res) => {
-    res.status(200).json(products);
+    // Assign random weights to each product before sending the response
+    const productsWithRandomWeight = products.map(product => {
+        return { ...product, weight: generateRandomWeight(50, 300) }; // Random weight between 50g and 300g
+    });
+    res.status(200).json(productsWithRandomWeight);
 });
 
 // SSE endpoint to send product updates
