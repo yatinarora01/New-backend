@@ -43,7 +43,7 @@ app.post('/add-item', (req, res) => {
     return res.status(200).json({ message: 'Product added successfully.', products });
 });
 
-app.post('/delete-item', (req, res) => {
+app.delete('/delete-item', (req, res) => {
     const { name } = req.body;
     const productIndex = products.findIndex(product => product.name === name);
 
