@@ -51,16 +51,6 @@ app.post('/delete-item', (req, res) => {
         products.splice(productIndex, 1); // Remove the product
         productUpdateEmitter.emit('productUpdated', products); // Emit the update event
 
-        
-        // Notify Raspberry Pi
-        axios.post('http://192.168.1.10:3000/reset-detection') // Replace with actual URL
-            .then(() => {
-                console.log('Raspberry Pi notified to reset detection.');
-            })
-            .catch(err => {
-                console.error('Error notifying Raspberry Pi:', err);
-            });
-
         return res.status(200).json({ message: 'Product deleted successfully.', products });
     }
     
